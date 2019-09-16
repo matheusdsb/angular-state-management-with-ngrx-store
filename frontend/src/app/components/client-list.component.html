@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-10">        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="clickable" (click)="orderBy('code')">Code</th>
+                    <th scope="col" class="clickable" (click)="orderBy('name')">Name</th>
+                    <th scope="col" class="clickable" (click)="orderBy('address')">Address</th>
+                    <th scope="col" class="clickable" (click)="orderBy('telephone')">Telephone</th>
+                    <th scope="col" class="clickable" (click)="orderBy('status')">Status</th>
+                    <th scope="col" class="clickable" (click)="orderBy('birthDate')">Birth Date</th>
+                    <th scope="col">Actions</th>
+                </tr>        
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of clientList | async">
+                    <th scope="row">{{c.code}}</th>
+                    <td>{{c.name}}</td>
+                    <td>{{c.address}}</td>
+                    <td>{{c.telephone}}</td>
+                    <td>{{c.status}}</td>
+                    <td>{{c.birthDate|date:'MM/dd/yyyy'}}</td>
+                    <td>                       
+                        <a class="btn btn-primary" href="client/cad/{{c._id}}" role="button">edit</a>
+                        &nbsp;
+                        <button class="btn btn-danger" role="button" (click)="onRemove(c._id)">remove</button>
+                    </td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <button type="button" class="btn btn-success" (click)="export()">Export XLS</button>
+</div>
+<pre>{{ clients$ | async | json }}</pre>
+
+

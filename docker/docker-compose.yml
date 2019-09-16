@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  #mongo-express:
+    #image: mongo-express
+    #container_name: mongo_express
+    #ports:
+      #- 8081:8081
+    #environment:
+      #ME_CONFIG_BASICAUTH_USERNAME: matheus
+      #ME_CONFIG_BASICAUTH_PASSWORD: mongoexpress
+      #ME_CONFIG_MONGODB_PORT: 27017
+      #ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      #ME_CONFIG_MONGODB_ADMINPASSWORD: mongodb
+    #links:
+      #- mongo
+    #networks:
+      #- mongo-compose-network
+
+  mongo:
+    image: mongo
+    container_name: mongodb
+    #environment:
+      #MONGO_INITDB_ROOT_USERNAME: root
+      #MONGO_INITDB_ROOT_PASSWORD: mongodb
+    ports:
+      - "27017:27017"
+    #volumes:
+      #- ./volumes/mongodb:/data/db
+    networks:
+      - mongo-compose-network
+
+networks: 
+    mongo-compose-network:
+      driver: bridge 
