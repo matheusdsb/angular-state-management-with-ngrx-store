@@ -13,7 +13,7 @@
                 </tr>        
             </thead>
             <tbody>
-                <tr *ngFor="let c of clientList | async">
+                <tr *ngFor="let c of clients$ | async">
                     <th scope="row">{{c.code}}</th>
                     <td>{{c.name}}</td>
                     <td>{{c.address}}</td>
@@ -33,6 +33,5 @@
 <div class="row">
     <button type="button" class="btn btn-success" (click)="export()">Export XLS</button>
 </div>
-<pre>{{ clients$ | async | json }}</pre>
 
 

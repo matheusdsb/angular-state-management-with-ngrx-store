@@ -2,6 +2,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Client } from '../models/client.model';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ClientActions from '../actions/client.actions'
+import { clientsLoaded } from '../actions/client.actions';
 
 export interface State extends EntityState<Client> {
     selectedClientId: string | null;
@@ -25,7 +26,7 @@ const clientReducer = createReducer(
     on(ClientActions.addClients, (state, { clients }) => {
         return adapter.addMany(clients, state);
     }),
-    on(ClientActions.loadClients, (state, { clients }) => {
+    on(ClientActions.clientsLoaded, (state, { clients }) => {
         return adapter.addAll(clients, state);
     }),
     on(ClientActions.mapClients, (state, { entityMap }) => {

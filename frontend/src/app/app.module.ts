@@ -13,6 +13,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { ClientEffects } from './effects/client.effects';
 import { StoreModule } from '@ngrx/store';
 import * as fromClient from './reducers/client.reducer';
+import { reducers } from './index';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,11 @@ import * as fromClient from './reducers/client.reducer';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({ 'clients': fromClient.reducer }),
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 15, // Retains last 25 states
+      // logOnly: environment.production, // Restrict extension to log-only mode
+    }),
     EffectsModule.forRoot([ClientEffects])
   ],
   providers: [ClientService, ExportService],

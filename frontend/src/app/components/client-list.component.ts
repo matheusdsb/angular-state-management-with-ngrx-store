@@ -5,6 +5,9 @@ import { Client } from '../models/client.model';
 import { ExportService } from '../services/export.service';
 import { Store, props } from '@ngrx/store';
 import * as fromClient from '../reducers/client.reducer';
+import { map } from 'rxjs/operators';
+import { selectAllClients } from '../selectors/client.selectors';
+import { loadClients } from '../actions/client.actions';
 
 @Component({
   selector: 'client-list',
@@ -15,45 +18,27 @@ export class ClientListComponent implements OnInit {
   fieldOrderBy: keyof Client = 'code';
   multiplierOrderBy: 1 | -1 = 1;
 
-  /*clientList: Observable<any> = new Observable((ob) => {
-    ob.next();
-  });*/
-
   clientList;
-  clients$: Observable<any> = this.store.select(state => state);
 
-  //constructor(private store: Store<{ clients: Client[] }>,
-  constructor(private store: Store<fromClient.State>,
-    private clientService: ClientService, 
-    private exportService: ExportService) { }
+  clients$: Observable<Client[]>;
 
-  loadList() {
-   /* this.clientService.getAll()
-      .subscribe(data => {
-        this.clientList = new Observable((ob) => {
-          ob.next(data ? data.sort((a, b) =>
-            a[this.fieldOrderBy] > b[this.fieldOrderBy] ? 1 * this.multiplierOrderBy : -1 * this.multiplierOrderBy)
-            : []
-          );
-        });
-      },
-      );*/
+  constructor(private store: Store<fromClient.State>, private exportService: ExportService) {
+    this.clients$ = store.select(selectAllClients);
   }
 
   ngOnInit() {
-    this.store.dispatch({ type: '[Clients] Load List' });
-    console.log(this.store.select(fromClient.selectAllClients));
+    this.store.dispatch(loadClients(null));
   }
 
   onRemove(id) {
-    this.clientService.delete(id).subscribe(
+    /*this.clientService.delete(id).subscribe(
       data => {
         this.loadList();
       },
       error => {
         console.error(error);
       }
-    );
+    );*/
   }
 
   export() {
