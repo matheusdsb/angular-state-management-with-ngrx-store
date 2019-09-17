@@ -1,4 +1,4 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { EntityState, EntityAdapter, createEntityAdapter, EntityMap } from '@ngrx/entity';
 import { Client } from '../models/client.model';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ClientActions from '../actions/client.actions';
@@ -35,8 +35,7 @@ const clientReducer = createReducer(
         return adapter.removeOne(id, state);
     }),
     on(ClientActions.loadClient, (state, { client }) => {
-        state.selectedClientId = client._id;
-        return state;
+        return Object.assign({}, state, { selectedClientId: client._id });
     })
 );
 

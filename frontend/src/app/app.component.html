@@ -17,10 +17,10 @@
 
 <div class="row">
   <div class="col-md-6" style="padding:50px;">
-    <client-list [clientList]="clients$ | async" (onLoad)=load($event)></client-list>
+    <client-list [clientList]="clients$ | async" (onLoad)="load($event)" (onRemove)="delete($event)"></client-list>
   </div>
   <div class="col-md-6" style="padding:50px;">
-    <client-cad [currentClient]="currentClient$ | async"></client-cad>
+    <client-cad></client-cad>
   </div>
 </div>
 

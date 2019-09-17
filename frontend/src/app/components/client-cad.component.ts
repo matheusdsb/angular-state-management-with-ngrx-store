@@ -5,6 +5,10 @@ import { Client } from '../models/client.model';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import * as fromClient from '../reducers/client.reducer';
+import { selectAllClients, selectCurrentClient } from '../selectors/client.selectors';
+import { loadClients, loadClient } from '../actions/client.actions';
 
 @Component({
   selector: 'client-cad',
@@ -20,18 +24,21 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
   message = null;
   error = false;
 
-  form = this.initForm();
+  form = this.initForm(this.currentClient);
 
-  constructor(private fb: FormBuilder, private clientService: ClientService, private route: ActivatedRoute) {
-    // this.currentClient.subscribe(data => { return console.log(data) });
-    //this.currentClient.subscribe(data => console.log(data));
+  constructor(
+    private fb: FormBuilder,
+    private clientService: ClientService,
+    private store: Store<fromClient.State>) {
   }
 
   ngOnInit() {
-    //this.form = this.initForm(this.currentClient);
+    this.store.select(selectCurrentClient).subscribe(data => {
+      this.form = this.initForm(data);
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges) {    
+  ngOnChanges(changes: SimpleChanges) {
     console.log('changes::', changes);
   }
 
@@ -59,7 +66,8 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
       if (this.id) {
         this.update(client);
       } else {
-        this.create(client);
+        // this.create(client);
+        this.store.dispatch({ type: '[Clients] Save', payload: client });
       }
     }
   }

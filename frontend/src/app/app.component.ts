@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Client } from './models/client.model';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromClient from './reducers/client.reducer';
 import { selectAllClients, selectCurrentClient } from './selectors/client.selectors';
-import { loadClients, loadClient } from './actions/client.actions';
+import { loadClients, loadClient, deleteClient } from './actions/client.actions';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
 
   clients$: Observable<Client[]>;
   currentClient$: Observable<Client>;
+  client: Client;
 
   constructor(private store: Store<fromClient.State>) {
     this.clients$ = store.select(selectAllClients);
@@ -28,8 +29,10 @@ export class AppComponent implements OnInit {
   }
 
   load(client) {
-    //this.store.dispatch(loadClient({ client }));
-    // this.currentClient$ = this.store.select(selectClient);
-    this.store.dispatch(loadClient({client}));
+    this.store.dispatch(loadClient({ client }));
+  }
+
+  delete(id) {
+    this.store.dispatch(deleteClient({ id }));
   }
 }
