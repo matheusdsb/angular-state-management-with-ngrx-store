@@ -35,4 +35,8 @@ export class AppComponent implements OnInit {
   delete(id) {
     this.store.dispatch(deleteClient({ id }));
   }
+
+  new() {
+    this.store.dispatch(loadClient(null));
+  }
 }

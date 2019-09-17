@@ -1,6 +1,8 @@
 <div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" (onDataLoaded)="onDataLoaded($event)">          
 
+        <input type="hidden" formControlName="_id"/>
+
         <div class="form-group col-md-6">
             <label for="code">Code</label>
             <input type="number" id="code" class="form-control" placeholder="Code" formControlName="code" required />

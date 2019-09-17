@@ -22,6 +22,7 @@ export class ClientListComponent implements OnInit {
 
   @Output() onLoad = new EventEmitter<Client>();
   @Output() onRemove = new EventEmitter<string>();
+  @Output() onNew = new EventEmitter<string>();
 
   constructor(private store: Store<fromClient.State>, private exportService: ExportService) {
   }
@@ -35,6 +36,10 @@ export class ClientListComponent implements OnInit {
 
   remove(id) {
     this.onRemove.emit(id);
+  }
+
+  new() {
+    this.onNew.emit();
   }
 
   export() {

@@ -7,5 +7,6 @@ export const loadClients = createAction('[Clients] Load CLients', props<{ client
 export const loadClient = createAction('[Clients] Load CLient', props<{ client: Client }>());
 export const addClients = createAction('[Clients] Add Clients', props<{ clients: Client[] }>());
 export const addClient = createAction('[Clients] Add Client', props<{ client: Client }>());
+export const updateClient = createAction('[Clients] Update Client', props<{ client: Client }>());
 export const mapClients = createAction('[Clients] Map Clients', props<{ entityMap: EntityMap<Client> }>());
 export const deleteClient = createAction('[Clients] Delete Client', props<{ id: string }>());

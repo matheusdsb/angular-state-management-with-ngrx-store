@@ -44,6 +44,7 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
 
   initForm(client?) {
     return this.fb.group({
+      _id: [client && client._id ? client._id : undefined],
       code: [client && client.code ? client.code : '', [Validators.required]],
       name: [client && client.name ? client.name : '', [Validators.required]],
       address: [client && client.address ? client.address : '', [Validators.required]],
@@ -63,17 +64,22 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.form.valid) {
       const client: Client = this.form.value;
 
-      if (this.id) {
+      if (client._id) {
         this.update(client);
       } else {
-        // this.create(client);
-        this.store.dispatch({ type: '[Clients] Save', payload: client });
+        this.create(client);        
       }
     }
   }
 
   update(client: Client) {
-    this.clientService.update(this.id, client)
+
+    this.store.dispatch({ type: '[Clients] Update', payload: client });
+
+    this.submited = false;
+    this.message = 'Client successfully updated.';    
+
+    /*this.clientService.update(this.id, client)
       .subscribe(
         data => {
           this.submited = false;
@@ -82,11 +88,18 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
         error => {
           this.message = error;
         }
-      );
+      );*/
   }
 
   create(client: Client) {
-    this.clientService.save(client)
+
+    this.store.dispatch({ type: '[Clients] Save', payload: client });
+
+    this.form.reset();
+    this.submited = false;
+    this.message = 'Client successfully created.';    
+
+    /*this.clientService.save(client)
       .subscribe(
         data => {
           this.form.reset();
@@ -96,6 +109,6 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
         error => {
           this.message = error;
         }
-      );
+      );*/
   }
 }

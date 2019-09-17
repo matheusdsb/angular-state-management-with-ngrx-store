@@ -34,8 +34,11 @@ const clientReducer = createReducer(
     on(ClientActions.deleteClient, (state, { id }) => {
         return adapter.removeOne(id, state);
     }),
+    on(ClientActions.updateClient, (state, { client }) => {
+        return adapter.upsertOne(client, state);        
+    }),    
     on(ClientActions.loadClient, (state, { client }) => {
-        return Object.assign({}, state, { selectedClientId: client._id });
+        return Object.assign({}, state, { selectedClientId: client ? client._id : null });
     })
 );
 

@@ -11,7 +11,7 @@ const emptyClient: Client = {
     address: '',
     telephone: '',
     status: '',
-    birthDate: new Date(),
+    birthDate: undefined,
     __v: ''
 }
 
