@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ClientService } from '../services/client.service';
 import { Observable } from 'rxjs';
 import { Client } from '../models/client.model';
@@ -18,27 +18,23 @@ export class ClientListComponent implements OnInit {
   fieldOrderBy: keyof Client = 'code';
   multiplierOrderBy: 1 | -1 = 1;
 
-  clientList;
+  @Input() clientList;
 
-  clients$: Observable<Client[]>;
+  @Output() onLoad = new EventEmitter<Client>();
+  @Output() onRemove = new EventEmitter<string>();
 
   constructor(private store: Store<fromClient.State>, private exportService: ExportService) {
-    this.clients$ = store.select(selectAllClients);
   }
 
   ngOnInit() {
-    this.store.dispatch(loadClients(null));
   }
 
-  onRemove(id) {
-    /*this.clientService.delete(id).subscribe(
-      data => {
-        this.loadList();
-      },
-      error => {
-        console.error(error);
-      }
-    );*/
+  load(client) {
+    this.onLoad.emit(client);
+  }
+
+  remove(id) {
+    this.onRemove.emit(id);
   }
 
   export() {

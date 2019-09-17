@@ -1,16 +1,15 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Client } from '../models/client.model';
 import { Action, createReducer, on } from '@ngrx/store';
-import * as ClientActions from '../actions/client.actions'
-import { clientsLoaded } from '../actions/client.actions';
+import * as ClientActions from '../actions/client.actions';
 
 export interface State extends EntityState<Client> {
     selectedClientId: string | null;
 }
 
 export const adapter: EntityAdapter<Client> = createEntityAdapter<Client>({
-     selectId: selectClientId,
-     sortComparer: sortByName,
+    selectId: selectClientId,
+    sortComparer: sortByName,
 });
 
 export const initialState: State = adapter.getInitialState({
@@ -34,6 +33,10 @@ const clientReducer = createReducer(
     }),
     on(ClientActions.deleteClient, (state, { id }) => {
         return adapter.removeOne(id, state);
+    }),
+    on(ClientActions.loadClient, (state, { client }) => {
+        state.selectedClientId = client._id;
+        return state;
     })
 );
 

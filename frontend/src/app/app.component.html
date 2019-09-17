@@ -15,7 +15,14 @@
     </div>
 </nav>
 
-<div style="margin:25px;">
-    <router-outlet></router-outlet>
+<div class="row">
+  <div class="col-md-6" style="padding:50px;">
+    <client-list [clientList]="clients$ | async" (onLoad)=load($event)></client-list>
+  </div>
+  <div class="col-md-6" style="padding:50px;">
+    <client-cad [currentClient]="currentClient$ | async"></client-cad>
+  </div>
 </div>
+
+<router-outlet></router-outlet>
 

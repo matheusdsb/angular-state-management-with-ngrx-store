@@ -4,6 +4,7 @@ import { Client } from '../models/client.model';
 
 export const clientsLoaded = createAction('[Clients] Clients Loaded', props<{ clients: Client[] }>());
 export const loadClients = createAction('[Clients] Load CLients', props<{ clients: Client[] }>());
+export const loadClient = createAction('[Clients] Load CLient', props<{ client: Client }>());
 export const addClients = createAction('[Clients] Add Clients', props<{ clients: Client[] }>());
 export const addClient = createAction('[Clients] Add Client', props<{ client: Client }>());
 export const mapClients = createAction('[Clients] Map Clients', props<{ entityMap: EntityMap<Client> }>());

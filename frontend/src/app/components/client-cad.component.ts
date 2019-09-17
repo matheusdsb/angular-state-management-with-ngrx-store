@@ -1,57 +1,53 @@
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit, Input, SimpleChange, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { ClientService } from '../services/client.service';
 import { Client } from '../models/client.model';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'client-cad',
   templateUrl: './client-cad.component.html',
 })
-export class ClientCadComponent implements OnInit, AfterViewInit {
+export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
+
+  @Input() currentClient;
 
   id: string = null;
-  routerSub: any;
 
   submited = false;
   message = null;
   error = false;
-  
+
   form = this.initForm();
 
-  constructor(private fb: FormBuilder, private clientService: ClientService, private route: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private clientService: ClientService, private route: ActivatedRoute) {
+    // this.currentClient.subscribe(data => { return console.log(data) });
+    //this.currentClient.subscribe(data => console.log(data));
+  }
 
   ngOnInit() {
-    this.routerSub = this.route.params.subscribe((params) => {
-			this.id = params['id'];
-		});
+    //this.form = this.initForm(this.currentClient);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {    
+    console.log('changes::', changes);
   }
 
   initForm(client?) {
-    return this.fb.group({      
-      code:  [client && client.code ? client.code : '', [Validators.required]],
+    return this.fb.group({
+      code: [client && client.code ? client.code : '', [Validators.required]],
       name: [client && client.name ? client.name : '', [Validators.required]],
-      address:  [client && client.address ? client.address : '', [Validators.required]],
-      telephone:  [client && client.telephone ? client.telephone : '', [Validators.required]],
-      status:  [client && client.status ? client.status : '', [Validators.required]],
-      birthDate:  [client && client.birthDate ? moment(client.birthDate).format('MM/DD/YYYY') : '', [Validators.required]],
+      address: [client && client.address ? client.address : '', [Validators.required]],
+      telephone: [client && client.telephone ? client.telephone : '', [Validators.required]],
+      status: [client && client.status ? client.status : '', [Validators.required]],
+      birthDate: [client && client.birthDate ? moment(client.birthDate).format('MM/DD/YYYY') : '', [Validators.required]],
     });
   }
 
-	ngAfterViewInit() {
+  ngAfterViewInit() {
 
-    if(this.id) {
-      this.clientService.getById(this.id)
-      .subscribe(
-        data => {
-          this.form = this.initForm(data);
-        },
-        error =>  {
-          this.message = error;
-        }
-      );
-    }
   }
 
   onSubmit() {
@@ -70,26 +66,26 @@ export class ClientCadComponent implements OnInit, AfterViewInit {
 
   update(client: Client) {
     this.clientService.update(this.id, client)
-    .subscribe(
-      data => {
-        this.submited = false;
-        this.message = 'Client successfully updated.';
-      },
-      error =>  {
-        this.message = error;
-      }
-    );
+      .subscribe(
+        data => {
+          this.submited = false;
+          this.message = 'Client successfully updated.';
+        },
+        error => {
+          this.message = error;
+        }
+      );
   }
 
   create(client: Client) {
-      this.clientService.save(client)
+    this.clientService.save(client)
       .subscribe(
         data => {
           this.form.reset();
           this.submited = false;
           this.message = 'Client successfully created.';
         },
-        error =>  {
+        error => {
           this.message = error;
         }
       );
