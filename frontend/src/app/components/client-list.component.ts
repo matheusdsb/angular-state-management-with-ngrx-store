@@ -65,4 +65,8 @@ export class ClientListComponent implements OnInit {
     this.fieldOrderBy = field;
     this.loadList();*/
   }
+
+  sort(field) {
+
+  }
 }

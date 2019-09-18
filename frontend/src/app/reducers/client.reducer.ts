@@ -1,4 +1,4 @@
-import { EntityState, EntityAdapter, createEntityAdapter, EntityMap } from '@ngrx/entity';
+import { EntityState, EntityAdapter, createEntityAdapter, EntityMap, Comparer } from '@ngrx/entity';
 import { Client } from '../models/client.model';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ClientActions from '../actions/client.actions';
@@ -31,14 +31,18 @@ const clientReducer = createReducer(
     on(ClientActions.mapClients, (state, { entityMap }) => {
         return adapter.map(entityMap, state);
     }),
-    on(ClientActions.deleteClient, (state, { id }) => {
+    on(ClientActions.clientDeleted, (state, { id }) => {
         return adapter.removeOne(id, state);
     }),
-    on(ClientActions.updateClient, (state, { client }) => {
-        return adapter.upsertOne(client, state);        
-    }),    
+    on(ClientActions.clientUpdated, (state, { client }) => {
+        return adapter.upsertOne(client, state);
+    }),
     on(ClientActions.loadClient, (state, { client }) => {
         return Object.assign({}, state, { selectedClientId: client ? client._id : null });
+    }),
+    on(ClientActions.sortClients, (state, { sorter }) => {
+        adapter.sortComparer = sorter;
+        return state;
     })
 );
 
@@ -52,6 +56,10 @@ export function selectClientId(c: Client): string {
 
 export function sortByName(a: Client, b: Client): number {
     return a.name.localeCompare(b.name);
+}
+
+export function sortByCode(a: Client, b: Client): number {
+    return a.code === b.code ? 0 : (a.code > b.code ? 1 : -1);
 }
 
 export const getSelectedClientId = (state: State) => state.selectedClientId;

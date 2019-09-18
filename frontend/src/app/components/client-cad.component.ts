@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import * as fromClient from '../reducers/client.reducer';
 import { selectAllClients, selectCurrentClient } from '../selectors/client.selectors';
-import { loadClients, loadClient } from '../actions/client.actions';
+import { loadClients, loadClient, saveClient, updateClient } from '../actions/client.actions';
 
 @Component({
   selector: 'client-cad',
@@ -67,48 +67,24 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
       if (client._id) {
         this.update(client);
       } else {
-        this.create(client);        
+        this.create(client);
       }
     }
   }
 
   update(client: Client) {
 
-    this.store.dispatch({ type: '[Clients] Update', payload: client });
+    this.store.dispatch(updateClient({ client }));
 
     this.submited = false;
-    this.message = 'Client successfully updated.';    
-
-    /*this.clientService.update(this.id, client)
-      .subscribe(
-        data => {
-          this.submited = false;
-          this.message = 'Client successfully updated.';
-        },
-        error => {
-          this.message = error;
-        }
-      );*/
+    this.message = 'Client successfully updated.';
   }
 
   create(client: Client) {
-
-    this.store.dispatch({ type: '[Clients] Save', payload: client });
+    this.store.dispatch(saveClient({ client }));
 
     this.form.reset();
     this.submited = false;
-    this.message = 'Client successfully created.';    
-
-    /*this.clientService.save(client)
-      .subscribe(
-        data => {
-          this.form.reset();
-          this.submited = false;
-          this.message = 'Client successfully created.';
-        },
-        error => {
-          this.message = error;
-        }
-      );*/
+    this.message = 'Client successfully created.';
   }
 }

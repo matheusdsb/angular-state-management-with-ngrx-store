@@ -16,8 +16,9 @@ module.exports = {
 
 	async store(req, res) {
 		try {
-			const client = await Client.create(req.body);		
-			return res.json(client);
+			await Client.create(req.body);
+			const clients = await Client.find().sort({"_id" : -1}).limit(1);
+			return res.json(clients[0]);
 		} catch(err) {
 			return res.status(414).send(err);
 		}		
