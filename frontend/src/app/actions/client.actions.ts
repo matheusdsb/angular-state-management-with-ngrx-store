@@ -13,4 +13,4 @@ export const clientUpdated = createAction('[Clients] Client Updated', props<{ cl
 export const mapClients = createAction('[Clients] Map Clients', props<{ entityMap: EntityMap<Client> }>());
 export const deleteClient = createAction('[Clients] Delete Client', props<{ id: string }>());
 export const clientDeleted = createAction('[Clients] Client Deleted', props<{ id: string }>());
-export const sortClients = createAction('[Clients] Sort CLients', props<{ sorter: Comparer<Client> }>());
+export const sortClients = createAction('[Clients] Sort CLients', props<{ field: string }>());

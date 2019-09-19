@@ -23,3 +23,12 @@ export const selectCurrentClient = createSelector(
     selectClientId,
     (clientEntities, clientId) => clientId ? clientEntities[clientId] : emptyClient
 );
+
+export const selectSortedClients = createSelector(
+    selectClientsState,
+    selectAllClients,
+    (state, clients) =>  clients.sort((a, b) =>
+        a[state.sorterField] === b[state.sorterField] ? 0 :
+            (a[state.sorterField] > b[state.sorterField] ? 1 * state.sorterMutipliier : -1 * state.sorterMutipliier)
+    )
+);

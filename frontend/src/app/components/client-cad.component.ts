@@ -14,7 +14,7 @@ import { loadClients, loadClient, saveClient, updateClient } from '../actions/cl
   selector: 'client-cad',
   templateUrl: './client-cad.component.html',
 })
-export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
+export class ClientCadComponent implements OnInit, AfterViewInit {
 
   @Input() currentClient;
 
@@ -34,12 +34,9 @@ export class ClientCadComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.store.select(selectCurrentClient).subscribe(data => {
+      this.submited = false;
       this.form = this.initForm(data);
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('changes::', changes);
   }
 
   initForm(client?) {

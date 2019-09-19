@@ -1,13 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ClientService } from '../services/client.service';
-import { Observable } from 'rxjs';
 import { Client } from '../models/client.model';
 import { ExportService } from '../services/export.service';
-import { Store, props } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromClient from '../reducers/client.reducer';
-import { map } from 'rxjs/operators';
-import { selectAllClients } from '../selectors/client.selectors';
-import { loadClients } from '../actions/client.actions';
 
 @Component({
   selector: 'client-list',
@@ -23,6 +18,7 @@ export class ClientListComponent implements OnInit {
   @Output() onLoad = new EventEmitter<Client>();
   @Output() onRemove = new EventEmitter<string>();
   @Output() onNew = new EventEmitter<string>();
+  @Output() onSort = new EventEmitter<string>();
 
   constructor(private store: Store<fromClient.State>, private exportService: ExportService) {
   }
@@ -43,30 +39,11 @@ export class ClientListComponent implements OnInit {
   }
 
   export() {
-
-    /*const jsonArray: Client[] = [];
-
-    this.clientList.forEach(element => {
-      element.forEach(c => jsonArray.push(c));
-    });
-
-    this.exportService.exportExcel(jsonArray, 'clients');*/
-  }
-
-  orderBy(field: keyof Client) {
-
-    /*if (field !== this.fieldOrderBy) {
-      this.fieldOrderBy = field;
-      this.multiplierOrderBy = 1;
-    } else {
-      this.multiplierOrderBy *= -1;
-    }
-
-    this.fieldOrderBy = field;
-    this.loadList();*/
+    this.exportService.exportExcel(this.clientList, 'clients');
   }
 
   sort(field) {
-
+    this.onSort.emit(field);
   }
 }
+

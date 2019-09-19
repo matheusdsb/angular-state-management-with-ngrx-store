@@ -5,6 +5,8 @@ import * as ClientActions from '../actions/client.actions';
 
 export interface State extends EntityState<Client> {
     selectedClientId: string | null;
+    sorterField: string | null;
+    sorterMutipliier: number | null;
 }
 
 export const adapter: EntityAdapter<Client> = createEntityAdapter<Client>({
@@ -15,6 +17,8 @@ export const adapter: EntityAdapter<Client> = createEntityAdapter<Client>({
 export const initialState: State = adapter.getInitialState({
     // additional entity state properties
     selectedClientId: null,
+    sorterField: 'name',
+    sorterMutipliier: 1,
 });
 
 const clientReducer = createReducer(
@@ -40,9 +44,16 @@ const clientReducer = createReducer(
     on(ClientActions.loadClient, (state, { client }) => {
         return Object.assign({}, state, { selectedClientId: client ? client._id : null });
     }),
-    on(ClientActions.sortClients, (state, { sorter }) => {
-        adapter.sortComparer = sorter;
-        return state;
+    on(ClientActions.sortClients, (state, { field }) => {
+
+        if (field === state.sorterField) {
+            state.sorterMutipliier *= -1;
+        } else {
+            state.sorterField = field;
+            state.sorterMutipliier = 1;
+        }
+
+        return Object.assign({}, state, state);
     })
 );
 
