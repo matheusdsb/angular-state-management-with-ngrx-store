@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './index';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ToastrModule } from 'ngx-toastr';
+import { ToastrEffects } from './effects/toastr.effects';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { ToastrModule } from 'ngx-toastr';
       maxAge: 15, // Retains last 25 states
       // logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    EffectsModule.forRoot([ClientEffects])
+    EffectsModule.forRoot([ClientEffects, ToastrEffects])
   ],
   providers: [ClientService, ExportService],
   bootstrap: [AppComponent]

@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadClients(null));
-    this.toastr.success('OK', 'Toastr fun!');
+    //this.toastr.success('OK', 'Toastr fun!');
   }
 
   load(client) {
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   delete(id) {
-    this.store.dispatch(deleteClient({ id })); 
+    this.store.dispatch(deleteClient({ id }));
   }
 
   new() {

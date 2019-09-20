@@ -18,17 +18,12 @@ export class ClientCadComponent implements OnInit, AfterViewInit {
 
   @Input() currentClient;
 
-  id: string = null;
-
   submited = false;
-  message = null;
-  error = false;
 
   form = this.initForm(this.currentClient);
 
   constructor(
     private fb: FormBuilder,
-    private clientService: ClientService,
     private store: Store<fromClient.State>) {
   }
 
@@ -70,18 +65,13 @@ export class ClientCadComponent implements OnInit, AfterViewInit {
   }
 
   update(client: Client) {
-
     this.store.dispatch(updateClient({ client }));
-
     this.submited = false;
-    this.message = 'Client successfully updated.';
   }
 
   create(client: Client) {
     this.store.dispatch(saveClient({ client }));
-
     this.form.reset();
     this.submited = false;
-    this.message = 'Client successfully created.';
   }
 }
