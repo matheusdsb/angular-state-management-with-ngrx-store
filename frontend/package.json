@@ -35,10 +35,11 @@
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "xlsx": "^0.15.1",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "serialize-javascript": ">=2.1.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.13.0",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "~7.3.8",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
@@ -47,6 +48,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
+    "handlebars": ">=4.3.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.0",
@@ -55,10 +57,9 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "serialize-javascript": ">=2.1.1",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2",
-    "handlebars": ">=4.3.0",
-    "serialize-javascript": ">=2.1.1"
+    "typescript": "~3.2.2"
   }
 }
