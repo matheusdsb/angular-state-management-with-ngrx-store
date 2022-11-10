@@ -29,7 +29,7 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "ngx-bootstrap": "^5.1.1",
     "ngx-toastr": "^10.2.0",
     "rxjs": "~6.3.3",
